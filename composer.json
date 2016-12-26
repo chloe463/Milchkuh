@@ -1,0 +1,21 @@
+{
+    "name": "chloe463/milchkuh",
+    "description": "A wrapper class (trait) of PDO.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "TsuyoshiHara",
+            "email": "chloe463@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Milchkuh\\": "./src"
+        }
+    }
+}
