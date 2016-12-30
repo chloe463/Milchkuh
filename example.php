@@ -1,10 +1,8 @@
 <?php
 
-namespace Milchkuh;
-
 require __DIR__ . '/vendor/autoload.php';
 
-use Milchkuh\Milchkuh;
+use chloe463\Milchkuh\Milchkuh;
 
 class MilchkuhDummyClass
 {
@@ -34,7 +32,7 @@ SQL;
         $records    = [];
 
         try {
-            $records = $this->select($query, $bind_param, 'Milchkuh\\UScore');
+            $records = $this->select($query, $bind_param, 'UScore');
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
             print_r($e->getTrace());

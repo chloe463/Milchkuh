@@ -1,6 +1,6 @@
 <?php
 
-namespace Milchkuh;
+namespace chloe463\Milchkuh;
 
 class QueryBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,16 +25,16 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Milchkuh\QueryBuilder::init
+     * @covers chloe463\Milchkuh\QueryBuilder::init
      */
     public function testInit()
     {
-        $this->assertInstanceOf('\Milchkuh\QueryBuilder', $this->object->init());
+        $this->assertInstanceOf('chloe463\Milchkuh\QueryBuilder', $this->object->init());
         $this->assertEquals('', $this->object->getQuery());
     }
 
     /**
-     * @covers Milchkuh\QueryBuilder::setQuery
+     * @covers chloe463\Milchkuh\QueryBuilder::setQuery
      */
     public function testSetQuery()
     {
@@ -45,7 +45,7 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Milchkuh\QueryBuilder::getQuery
+     * @covers chloe463\Milchkuh\QueryBuilder::getQuery
      */
     public function testGetQuery()
     {
@@ -55,7 +55,7 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Milchkuh\QueryBuilder::append
+     * @covers chloe463\Milchkuh\QueryBuilder::append
      */
     public function testAppend()
     {

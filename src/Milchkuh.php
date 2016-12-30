@@ -5,7 +5,7 @@
  * A wrapper class (trait) of PDO.
  */
 
-namespace Milchkuh;
+namespace chloe463\Milchkuh;
 
 trait Milchkuh
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Milchkuh;
+namespace chloe463\Milchkuh;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +26,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Milchkuh\Exception::getQuery
+     * @covers chloe463\Milchkuh\Exception::getQuery
      */
     public function testGetQuery()
     {
@@ -37,7 +37,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Milchkuh\Exception::getBindParam
+     * @covers chloe463\Milchkuh\Exception::getBindParam
      */
     public function testGetBindParam()
     {
@@ -48,7 +48,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Milchkuh\Exception::getBindParamAsJson
+     * @covers chloe463\Milchkuh\Exception::getBindParamAsJson
      */
     public function testGetBindParamAsJson()
     {
