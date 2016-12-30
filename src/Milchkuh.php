@@ -260,7 +260,7 @@ trait Milchkuh
      *
      * @return  \PDOStatement
      */
-    public function prepare($query)
+    public function prepare($query, $bind_param)
     {
         if (!is_null($this->logger)) {
             $this->logger->log($query);
@@ -299,7 +299,7 @@ trait Milchkuh
             throw new Exception("Non-INSERT query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $this->last_insert_id = $this->dbh->lastInsertId();
@@ -323,7 +323,7 @@ trait Milchkuh
             throw new Exception("Non-SELECT query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $records = [];
@@ -353,7 +353,7 @@ trait Milchkuh
             throw new Exception("Non-UPDATE query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $row_count = $statement->rowCount();
@@ -376,7 +376,7 @@ trait Milchkuh
             throw new Exception("Non-DELETE query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $row_count = $statement->rowCount();
@@ -399,7 +399,7 @@ trait Milchkuh
             throw new Exception("Non-CALL query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $records = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -418,7 +418,7 @@ trait Milchkuh
      */
     public function nap($seconds)
     {
-        $statement = $this->prepare("SELECT SLEEP({$seconds})");
+        $statement = $this->prepare("SELECT SLEEP({$seconds})", []);
         $this->execute($statement, []);
         $this->disconnect($statement);
         return true;

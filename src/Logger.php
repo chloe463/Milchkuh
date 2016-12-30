@@ -57,11 +57,59 @@ class Logger
      * @param   string  $query
      * @param   array   $bind_param
      */
-    public function buildMessage($query)
+    public function buildMessage($query, $bind_param = [])
     {
         $now = (new \DateTime())->format('Y-m-d H:i:s');
         $pid = getmypid();
 
-        return sprintf("[%s] [%s] %s\n", $now, $pid, $query);
+        $message = '';
+        if (strpos($query, '?') !== false) {
+            $message = $this->_replaceQuestion2Param($query, $bind_param);
+        } else {
+            $message = $this->_replaceKeyword2Param($query, $bind_param);
+        }
+        return sprintf("[%s] [%s] %s\n", $now, $pid, $message);
+    }
+
+    /**
+     * Replace ? in query to parameter value
+     *
+     * @param   string  $query
+     * @param   array   $bind_param
+     */
+    private function _replaceQuestion2Param($query, $bind_param)
+    {
+        if (empty($bind_param)) {
+            return $query;
+        }
+        $count = 0;
+        return preg_replace_callback('/\?/', function ($matches) use ($bind_param, &$count) {
+            if (!isset($bind_param[$count])) {
+                return '?';
+            }
+            $res = $bind_param[$count++];
+            return $res;
+        }, $query);
+    }
+
+    /**
+     * Replace :keyword to parameter value
+     *
+     * @param   string  $query
+     * @param   array   $bind_param
+     */
+    private function _replaceKeyword2Param($query, $bind_param)
+    {
+        if (empty($bind_param)) {
+            return $query;
+        }
+        $map = $bind_param;
+        foreach ($bind_param as $key => $value) {
+            if (strpos($key, ':') !== 0) {
+                $map[':' . $key] = $value;
+                unset($map[$key]);
+            }
+        }
+        return strtr($query, $map);
     }
 }

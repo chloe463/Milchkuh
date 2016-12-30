@@ -72,7 +72,7 @@ SQL;
             $_ENV['DB_USER'],
             $_ENV['DB_PASS']
         );
-        $statement = $dbh->prepare($query);
+        $statement = $dbh->prepare($query, $new_record);
         $statement->execute($new_record);
         $this->test_record_id = $dbh->lastInsertId();
     }
@@ -88,7 +88,7 @@ SQL;
             $_ENV['DB_USER'],
             $_ENV['DB_PASS']
         );
-        $statement = $dbh->prepare($query);
+        $statement = $dbh->prepare($query, []);
         $statement->execute([]);
         $this->object = null;
     }
@@ -468,7 +468,7 @@ SQL;
      */
     public function testPrepare()
     {
-        $actual_result = $this->object->prepare('SELECT 1');
+        $actual_result = $this->object->prepare('SELECT 1', []);
         $this->assertInstanceOf('\PDOStatement', $actual_result);
     }
 
@@ -477,12 +477,12 @@ SQL;
      */
     public function testExecute()
     {
-        $statement     = $this->object->prepare('SELECT 1');
+        $statement     = $this->object->prepare('SELECT 1', []);
         $actual_result = $this->object->execute($statement, []);
         $this->assertTrue($actual_result);
 
         try {
-            $statement = $this->object->prepare('SELECT ?');
+            $statement = $this->object->prepare('SELECT ?', [1]);
             $this->object->execute($statement, []);
             $this->fail();
         } catch (Exception $e) {

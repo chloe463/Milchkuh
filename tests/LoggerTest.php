@@ -83,8 +83,44 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildMessage()
     {
-        $expected_result = '/\[[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\]\s\[[0-9]+\]\sSELECT \* FROM db\.table/';
+        $expected_result = '/^\[[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\]\s\[[0-9]+\]\sSELECT \* FROM db\.table$/';
         $actual_result   = $this->object->buildMessage('SELECT * FROM db.table');
+        $this->assertRegExp($expected_result, $actual_result);
+
+        $query           = 'SELECT * FROM db.table WHERE key = ? AND column = ?';
+        $bind_param      = [123, 456];
+        $expected_result = '/^\[[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\]\s\[[0-9]+\]\sSELECT \* FROM db\.table WHERE key = 123 AND column = 456$/';
+        $actual_result   = $this->object->buildMessage($query, $bind_param);
+        $this->assertRegExp($expected_result, $actual_result);
+
+        $query           = 'SELECT * FROM db.table WHERE key = :key AND column = :column';
+        $bind_param      = [':key' => 123, ':column' => 456];
+        $expected_result = '/^\[[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\]\s\[[0-9]+\]\sSELECT \* FROM db\.table WHERE key = 123 AND column = 456$/';
+        $actual_result   = $this->object->buildMessage($query, $bind_param);
+        $this->assertRegExp($expected_result, $actual_result);
+
+        $query           = 'SELECT * FROM db.table WHERE key = :key AND column = :column';
+        $bind_param      = ['key' => 123, 'column' => 456];
+        $expected_result = '/^\[[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\]\s\[[0-9]+\]\sSELECT \* FROM db\.table WHERE key = 123 AND column = 456$/';
+        $actual_result   = $this->object->buildMessage($query, $bind_param);
+        $this->assertRegExp($expected_result, $actual_result);
+    }
+
+    /**
+     * @covers chloe463\Milchkuh\Logger::buildMessage
+     */
+    public function testBuildMessage_withMissingKey()
+    {
+        $query           = 'SELECT * FROM db.table WHERE key = ? AND column = ?';
+        $bind_param      = [123];
+        $expected_result = '/^\[[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\]\s\[[0-9]+\]\sSELECT \* FROM db\.table WHERE key = 123 AND column = \?\n$/';
+        $actual_result   = $this->object->buildMessage($query, $bind_param);
+        $this->assertRegExp($expected_result, $actual_result);
+
+        $query           = 'SELECT * FROM db.table WHERE key = :key AND column = :column';
+        $bind_param      = [':column' => 456];
+        $expected_result = '/^\[[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\]\s\[[0-9]+\]\sSELECT \* FROM db\.table WHERE key = :key AND column = 456\n$/';
+        $actual_result   = $this->object->buildMessage($query, $bind_param);
         $this->assertRegExp($expected_result, $actual_result);
     }
 }
