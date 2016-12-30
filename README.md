@@ -1,10 +1,18 @@
 # Milchkuh
 
+[![Build Status](https://travis-ci.org/chloe463/Milchkuh.svg?branch=master)](https://travis-ci.org/chloe463/Milchkuh)
+
 ## Summary
 
 This is a wrapper class (trait) of PDO.
 
 You can access MySQL database with simple APIs.
+
+## Install
+
+```bash
+$ composer require chloe463/milchkuh
+```
 
 ## Usage
 
