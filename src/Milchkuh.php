@@ -263,7 +263,7 @@ trait Milchkuh
         try {
             return $statement->execute($bind_param);
         } catch (\PDOException $e) {
-            throw new Exception("Failed to execute SQL", '', $bind_param, Exception::EXEC_ERROR, $e);
+            throw new Exception("Failed to execute SQL - {$e->getMessage()}", '', $bind_param, Exception::EXEC_ERROR, $e);
         }
     }
 

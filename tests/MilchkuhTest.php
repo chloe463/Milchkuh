@@ -476,7 +476,7 @@ SQL;
             $this->fail();
         } catch (Exception $e) {
             $this->assertEquals(9, $e->getCode());
-            $this->assertEquals('Failed to execute SQL', $e->getMessage());
+            $this->assertRegexp('/Failed to execute SQL\s\-\sSQLSTATE\[[^ ]+\]:\s.*/', $e->getMessage());
             $this->assertEquals('', $e->getQuery());
             $this->assertEquals([], $e->getBindParam());
             $this->assertEquals('[]', $e->getBindParamAsJson());
@@ -533,7 +533,7 @@ SQL;
             $this->fail();
         } catch (Exception $e) {
             $this->assertEquals(9, $e->getCode());
-            $this->assertEquals('Failed to execute SQL', $e->getMessage());
+            $this->assertRegexp('/Failed to execute SQL\s\-\sSQLSTATE\[[^ ]+\]:\s.*/', $e->getMessage());
         }
     }
 
@@ -622,7 +622,7 @@ SQL;
             $records = $this->object->select($query, $bind_param);
         } catch (Exception $e) {
             $this->assertEquals(9, $e->getCode());
-            $this->assertEquals('Failed to execute SQL', $e->getMessage());
+            $this->assertRegexp('/Failed to execute SQL\s\-\sSQLSTATE\[[^ ]+\]:\s.*/', $e->getMessage());
         }
     }
 
@@ -679,7 +679,7 @@ SQL;
             $this->fail();
         } catch (Exception $e) {
             $this->assertEquals(9, $e->getCode());
-            $this->assertEquals('Failed to execute SQL', $e->getMessage());
+            $this->assertRegexp('/Failed to execute SQL\s\-\sSQLSTATE\[[^ ]+\]:\s.*/', $e->getMessage());
         }
 
         $this->assertEquals(0, $row_count);
@@ -735,7 +735,7 @@ SQL;
             $this->fail();
         } catch (Exception $e) {
             $this->assertEquals(9, $e->getCode());
-            $this->assertEquals('Failed to execute SQL', $e->getMessage());
+            $this->assertRegexp('/Failed to execute SQL\s\-\sSQLSTATE\[[^ ]+\]:\s.*/', $e->getMessage());
         }
 
         $this->assertEquals(0, $row_count);
@@ -780,7 +780,7 @@ SQL;
             $this->object->call($query, []);
         } catch (Exception $e) {
             $this->assertEquals(9, $e->getCode());
-            $this->assertEquals('Failed to execute SQL', $e->getMessage());
+            $this->assertRegexp('/Failed to execute SQL\s\-\sSQLSTATE\[[^ ]+\]:\s.*/', $e->getMessage());
         }
     }
 
