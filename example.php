@@ -14,11 +14,11 @@ class MilchkuhDummyClass
             'host'       => 'localhost',
             'port'       => 3306,
             'user'       => 'root',
-            'pass'       => 'vagrant',
+            'pass'       => '',
             'db_name'    => 'test',
             'table_name' => 'milchkuh_test'
         ];
-        $this->init($db_info);
+        $this->init($db_info, __DIR__ . '/logs/query.log');
     }
 
     public function fetch()

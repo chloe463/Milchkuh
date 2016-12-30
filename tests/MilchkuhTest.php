@@ -20,7 +20,7 @@ class Milchkuh_dummy
             'db_name'    => $_ENV['DB_NAME'],
             'table_name' => $_ENV['DB_TABLE']
         ];
-        $this->init($connection_info);
+        $this->init($connection_info, __DIR__ . '/logs/test.log');
     }
 }
 
@@ -202,6 +202,14 @@ SQL;
     }
 
     /**
+     * @covers chloe463\Milchkuh\Milchkuh::getLogger
+     */
+    public function testGetLogger()
+    {
+        $this->assertInstanceOf('chloe463\Milchkuh\Logger', $this->object->getLogger());
+    }
+
+    /**
      * @covers chloe463\Milchkuh\Milchkuh::init
      */
     public function testInit()
@@ -219,6 +227,9 @@ SQL;
         $this->assertEquals($connection_info, $this->object->getConnectionInfo());
         $this->assertEquals($_ENV['DB_NAME'], $this->object->getDbName());
         $this->assertEquals($_ENV['DB_TABLE'], $this->object->getTableName());
+
+        $this->object->init($connection_info, __DIR__ . '/logs/test.log');
+        $this->assertInstanceOf('chloe463\Milchkuh\Logger', $this->object->getLogger());
     }
 
     /**

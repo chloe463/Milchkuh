@@ -19,6 +19,7 @@ class Exception extends \Exception
     const NO_TRANSACTION    = 8;
     const EXEC_ERROR        = 9;
     const CALL_ERROR        = 10;
+    const LOGFILE_DIR_ERROR = 11;
 
     /**
      * @var string  $query

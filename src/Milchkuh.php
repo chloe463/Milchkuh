@@ -40,6 +40,11 @@ trait Milchkuh
     protected $row_count;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * Getters and setters
      */
     public function getConnectionInfo()
@@ -82,17 +87,27 @@ trait Milchkuh
         return $this->row_count;
     }
 
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
     /**
      * Initialize
      *
      * @param   array   $connection_info
      */
-    public function init($connection_info)
+    public function init($connection_info, $log_file_path = '')
     {
         $this->validateConnectionInfo($connection_info);
         $this->connection_info = $connection_info;
         $this->db_name         = $connection_info['db_name'];
         $this->table_name      = isset($connection_info['table_name']) ? $connection_info['table_name'] : '';
+
+        $this->logger = null;
+        if ($log_file_path !== '') {
+            $this->logger = new Logger($log_file_path);
+        }
 
         return;
     }
@@ -247,6 +262,9 @@ trait Milchkuh
      */
     public function prepare($query)
     {
+        if (!is_null($this->logger)) {
+            $this->logger->log($query);
+        }
         return $this->connect()->prepare($query);
     }
 
