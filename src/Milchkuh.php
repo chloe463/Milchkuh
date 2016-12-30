@@ -275,7 +275,7 @@ trait Milchkuh
      *
      * @return  integer
      */
-    public function insert($query, $bind_param)
+    public function insert($query, $bind_param = [])
     {
         if (!$this->validateQuery($query, 'INSERT')) {
             throw new Exception("Non-INSERT query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
@@ -299,7 +299,7 @@ trait Milchkuh
      *
      * @return  array
      */
-    public function select($query, $bind_param, $class_name = '')
+    public function select($query, $bind_param = [], $class_name = '')
     {
         if (!$this->validateQuery($query, 'SELECT')) {
             throw new Exception("Non-SELECT query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
@@ -329,7 +329,7 @@ trait Milchkuh
      *
      * @return  integer
      */
-    public function update($query, $bind_param)
+    public function update($query, $bind_param = [])
     {
         if (!$this->validateQuery($query, 'UPDATE')) {
             throw new Exception("Non-UPDATE query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
@@ -352,7 +352,7 @@ trait Milchkuh
      *
      * @return  integer
      */
-    public function delete($query, $bind_param)
+    public function delete($query, $bind_param = [])
     {
         if (!$this->validateQuery($query, 'DELETE')) {
             throw new Exception("Non-DELETE query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
@@ -375,7 +375,7 @@ trait Milchkuh
      *
      * @return  array
      */
-    public function call($query, $bind_param)
+    public function call($query, $bind_param = [])
     {
         if (!$this->validateQuery($query, 'CALL')) {
             throw new Exception("Non-CALL query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
