@@ -5,7 +5,7 @@
  * A simple query builder
  */
 
-namespace Milchkuh;
+namespace chloe463\Milchkuh;
 
 class QueryBuilder
 {

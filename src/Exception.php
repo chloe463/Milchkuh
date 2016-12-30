@@ -5,7 +5,7 @@
  * Custom exception class.
  */
 
-namespace Milchkuh;
+namespace chloe463\Milchkuh;
 
 class Exception extends \Exception
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Milchkuh;
+namespace chloe463\Milchkuh;
 
 /**
  * Milchkuh_Dummy class
@@ -94,7 +94,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::getConnectionInfo
+     * @covers chloe463\Milchkuh\Milchkuh::getConnectionInfo
      */
     public function testGetConnectionInfo()
     {
@@ -111,7 +111,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::getDbName
+     * @covers chloe463\Milchkuh\Milchkuh::getDbName
      */
     public function testGetDbName()
     {
@@ -121,7 +121,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::setDbName
+     * @covers chloe463\Milchkuh\Milchkuh::setDbName
      */
     public function testSetDbName()
     {
@@ -131,7 +131,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::getTableName
+     * @covers chloe463\Milchkuh\Milchkuh::getTableName
      */
     public function testGetTableName()
     {
@@ -141,7 +141,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::setTableName
+     * @covers chloe463\Milchkuh\Milchkuh::setTableName
      */
     public function testSetTableName()
     {
@@ -151,7 +151,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::getDbh
+     * @covers chloe463\Milchkuh\Milchkuh::getDbh
      */
     public function testGetDbh()
     {
@@ -163,9 +163,9 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::getLastInsertId
+     * @covers chloe463\Milchkuh\Milchkuh::getLastInsertId
      *
-     * This test must be executed after Milchkuh\Milchkuh::insert()
+     * This test must be executed after chloe463\Milchkuh\Milchkuh::insert()
      */
     public function testGetLastInsertId()
     {
@@ -187,7 +187,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::getRowCount
+     * @covers chloe463\Milchkuh\Milchkuh::getRowCount
      */
     public function testGetRowCount()
     {
@@ -202,7 +202,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::init
+     * @covers chloe463\Milchkuh\Milchkuh::init
      */
     public function testInit()
     {
@@ -222,7 +222,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::validateConnectionInfo
+     * @covers chloe463\Milchkuh\Milchkuh::validateConnectionInfo
      */
     public function testValidateConnectionInfo()
     {
@@ -243,7 +243,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::validateConnectionInfo
+     * @covers chloe463\Milchkuh\Milchkuh::validateConnectionInfo
      */
     public function testValidateConnectionInfo_throwsException()
     {
@@ -310,7 +310,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::connect
+     * @covers chloe463\Milchkuh\Milchkuh::connect
      */
     public function testConnect()
     {
@@ -320,7 +320,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::disconnect
+     * @covers chloe463\Milchkuh\Milchkuh::disconnect
      */
     public function testDisconnect()
     {
@@ -337,9 +337,9 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::begin
-     * @covers Milchkuh\Milchkuh::commit
-     * @covers Milchkuh\Milchkuh::rollBack
+     * @covers chloe463\Milchkuh\Milchkuh::begin
+     * @covers chloe463\Milchkuh\Milchkuh::commit
+     * @covers chloe463\Milchkuh\Milchkuh::rollBack
      */
     public function testTransaction()
     {
@@ -353,9 +353,9 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::begin
-     * @covers Milchkuh\Milchkuh::commit
-     * @covers Milchkuh\Milchkuh::rollBack
+     * @covers chloe463\Milchkuh\Milchkuh::begin
+     * @covers chloe463\Milchkuh\Milchkuh::commit
+     * @covers chloe463\Milchkuh\Milchkuh::rollBack
      */
     public function testTransaction_throwsException()
     {
@@ -372,7 +372,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::inTransaction
+     * @covers chloe463\Milchkuh\Milchkuh::inTransaction
      */
     public function testInTransaction()
     {
@@ -384,7 +384,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::commit
+     * @covers chloe463\Milchkuh\Milchkuh::commit
      */
     public function testCommit()
     {
@@ -394,7 +394,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::commit
+     * @covers chloe463\Milchkuh\Milchkuh::commit
      */
     public function testCommit_throwsException()
     {
@@ -407,7 +407,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::rollBack
+     * @covers chloe463\Milchkuh\Milchkuh::rollBack
      */
     public function testRollBak()
     {
@@ -417,7 +417,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::rollBack
+     * @covers chloe463\Milchkuh\Milchkuh::rollBack
      */
     public function testRollBack_throwsException()
     {
@@ -430,7 +430,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::buildDsn
+     * @covers chloe463\Milchkuh\Milchkuh::buildDsn
      */
     public function testBuildDsn()
     {
@@ -441,7 +441,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::validateQuery
+     * @covers chloe463\Milchkuh\Milchkuh::validateQuery
      */
     public function testValidateQuery()
     {
@@ -453,7 +453,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::prepare
+     * @covers chloe463\Milchkuh\Milchkuh::prepare
      */
     public function testPrepare()
     {
@@ -462,7 +462,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::execute
+     * @covers chloe463\Milchkuh\Milchkuh::execute
      */
     public function testExecute()
     {
@@ -484,7 +484,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::insert
+     * @covers chloe463\Milchkuh\Milchkuh::insert
      */
     public function testInsert()
     {
@@ -509,17 +509,17 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::insert
+     * @covers chloe463\Milchkuh\Milchkuh::insert
      */
     public function testInsert_throwsException()
     {
-        // Pass Non-INSERT query to Milchkuh\Milchkuh::insert
+        // Pass Non-INSERT query to chloe463\Milchkuh\Milchkuh::insert
         try {
             $this->object->insert('SELECT 1', []);
             $this->fail();
         } catch (Exception $e) {
             $this->assertEquals(2, $e->getCode());
-            $this->assertEquals('Non-INSERT query is given to Milchkuh\Milchkuh::insert', $e->getMessage());
+            $this->assertEquals('Non-INSERT query is given to chloe463\Milchkuh\Milchkuh::insert', $e->getMessage());
         }
 
         // Pass Insert query and empty bind parameter array
@@ -538,7 +538,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::select
+     * @covers chloe463\Milchkuh\Milchkuh::select
      */
     public function testSelect()
     {
@@ -566,7 +566,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::select
+     * @covers chloe463\Milchkuh\Milchkuh::select
      */
     public function testSelect_mapResult2Class()
     {
@@ -578,7 +578,7 @@ SQL;
         $bind_param = [];
         $records    = [];
         try {
-            $records = $this->object->select($query, $bind_param, 'Milchkuh\BattleShip');
+            $records = $this->object->select($query, $bind_param, 'chloe463\Milchkuh\BattleShip');
         } catch (Exception $e) {
             $this->fail();
             var_dump($e);
@@ -594,11 +594,11 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::select
+     * @covers chloe463\Milchkuh\Milchkuh::select
      */
     public function testSelect_throwsException()
     {
-        // Pass Non-SELECT query to Milchkuh\Milchkuh::select
+        // Pass Non-SELECT query to chloe463\Milchkuh\Milchkuh::select
         $query = <<<SQL
 INSERT INTO {$this->object->getDbName()}.{$this->object->getTableName()} (
     name, nick_name, del_flag, reg_date, update_date
@@ -608,7 +608,7 @@ SQL;
             $this->object->select($query, []);
         } catch (Exception $e) {
             $this->assertEquals(2, $e->getCode());
-            $this->assertEquals('Non-SELECT query is given to Milchkuh\Milchkuh::select', $e->getMessage());
+            $this->assertEquals('Non-SELECT query is given to chloe463\Milchkuh\Milchkuh::select', $e->getMessage());
         }
 
         // Pass SELECT query and empty bind parameter array
@@ -627,7 +627,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::update
+     * @covers chloe463\Milchkuh\Milchkuh::update
      */
     public function testUpdate()
     {
@@ -652,17 +652,17 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::update
+     * @covers chloe463\Milchkuh\Milchkuh::update
      */
     public function testUpdate_throwsException()
     {
-        // Pass Non-UPDATE query to Milchkuh\Milchkuh::update
+        // Pass Non-UPDATE query to chloe463\Milchkuh\Milchkuh::update
         $query = "SELECT 1";
         try {
             $this->object->update($query, []);
         } catch (Exception $e) {
             $this->assertEquals(2, $e->getCode());
-            $this->assertEquals('Non-UPDATE query is given to Milchkuh\Milchkuh::update', $e->getMessage());
+            $this->assertEquals('Non-UPDATE query is given to chloe463\Milchkuh\Milchkuh::update', $e->getMessage());
         }
 
         // Pass UPDATE query and empty bind parameter array
@@ -686,7 +686,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::delete
+     * @covers chloe463\Milchkuh\Milchkuh::delete
      *
      * @depends testUpdate
      */
@@ -709,17 +709,17 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::delete
+     * @covers chloe463\Milchkuh\Milchkuh::delete
      */
     public function testDelete_throwsException()
     {
-        // Pass Non-UPDATE query to Milchkuh\Milchkuh::delete
+        // Pass Non-UPDATE query to chloe463\Milchkuh\Milchkuh::delete
         $query = "SELECT 1";
         try {
             $this->object->delete($query, []);
         } catch (Exception $e) {
             $this->assertEquals(2, $e->getCode());
-            $this->assertEquals('Non-DELETE query is given to Milchkuh\Milchkuh::delete', $e->getMessage());
+            $this->assertEquals('Non-DELETE query is given to chloe463\Milchkuh\Milchkuh::delete', $e->getMessage());
         }
 
         // Pass UPDATE query and empty bind parameter array
@@ -742,7 +742,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::call
+     * @covers chloe463\Milchkuh\Milchkuh::call
      */
     public function testCall()
     {
@@ -761,17 +761,17 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::call
+     * @covers chloe463\Milchkuh\Milchkuh::call
      */
     public function testCall_throwsException()
     {
-        // Pass Non-CALL query to Milchkuh\Milchkuh::call
+        // Pass Non-CALL query to chloe463\Milchkuh\Milchkuh::call
         $query = 'SELECT 1';
         try {
             $this->object->call($query, []);
         } catch (Exception $e) {
             $this->assertEquals(2, $e->getCode());
-            $this->assertEquals('Non-CALL query is given to Milchkuh\Milchkuh::call', $e->getMessage());
+            $this->assertEquals('Non-CALL query is given to chloe463\Milchkuh\Milchkuh::call', $e->getMessage());
         }
 
         // Pass undefined stored procedure
@@ -785,7 +785,7 @@ SQL;
     }
 
     /**
-     * @covers Milchkuh\Milchkuh::nap
+     * @covers chloe463\Milchkuh\Milchkuh::nap
      */
     public function testNap()
     {
