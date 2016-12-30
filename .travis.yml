@@ -1,13 +1,16 @@
 language: php
 php:
-    - "5.5"
-    - "5.6"
+- '5.5'
+- '5.6'
 services:
-    - mysql
+- mysql
 before_script:
-    - mysql -uroot < sql/milchkuh_test_table.sql
-    - mysql -uroot < sql/test_stored_procedure.sql
-    - composer self-update
-    - composer install
+- mysql -uroot < sql/milchkuh_test_table.sql
+- mysql -uroot < sql/test_stored_procedure.sql
+- composer self-update
+- composer install
 script:
-    - vendor/bin/phpunit
+- vendor/bin/phpunit
+notifications:
+  slack:
+    secure: B1aQWaa0lPi2kFByrURDATcNS/Vo7RBDNvsA2b7xv3F+gCF2J0p+WXqoYQuCVCk7hHaACDwG30BsIvyauf1IdX6ltXsZmAT/VnYwc7nF5u2VjF83bUTX9qHIN2wZl3/f8ALvIT1OIVyL+kpdRogfc3NLmqmqO8NdRQeVHEuy3Q6HR5VCHs3mEiQCtwYMmaXOSQCzcNBLF6jlEkzho5sN7pMiUXDKZBU3OTDoy0f75NxQIf3QJUFygCUYrvqnciKBbMnforuaz1JMl6EJ3MujR1wM1FJ3p475f/bYGqDRqdz0EkHydK+lf4i9D6RYylAvavg+tKBVBuOkuZM5FfP8/we1j3cagRDecUe1Lesx4pLxRbD8i4PoAPiuIQAWAJ2w3FccmTHFjafJw4/qMu9tzi2lOjHsNqJmOA2NR/VZvwcIe0aerkKuWxdYiVlhcmR86mP6jhCppkvzGvMpnziHeR1hQtLu7+u3iCmcm0d5lTcFZSYbrCuyNuhWLinCYugkU0rNG9rpvDQXhGIPi4R0Joqlgl99+gApB2ZkBiDsrdzSmEi00V/VxkkD6n4fRRC3samwpcXrZax+7BuwaDK0DdJ4Swsf70qytaMyWzz3dexfqK1WCJ7zjt8wZyOwhj4DWV7BU2aqaIMjTsmoz2Wgzvr2jhGvKWExWLveHo79Mog=
