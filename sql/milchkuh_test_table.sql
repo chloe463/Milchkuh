@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS phpunit;
+CREATE DATABASE phpunit;
+use phpunit;
 DROP TABLE IF EXISTS milchkuh_test;
 CREATE TABLE `milchkuh_test` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
