@@ -40,6 +40,11 @@ trait Milchkuh
     protected $row_count;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * Getters and setters
      */
     public function getConnectionInfo()
@@ -82,17 +87,27 @@ trait Milchkuh
         return $this->row_count;
     }
 
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
     /**
      * Initialize
      *
      * @param   array   $connection_info
      */
-    public function init($connection_info)
+    public function init($connection_info, $log_file_path = '')
     {
         $this->validateConnectionInfo($connection_info);
         $this->connection_info = $connection_info;
         $this->db_name         = $connection_info['db_name'];
         $this->table_name      = isset($connection_info['table_name']) ? $connection_info['table_name'] : '';
+
+        $this->logger = null;
+        if ($log_file_path !== '') {
+            $this->logger = new Logger($log_file_path);
+        }
 
         return;
     }
@@ -245,8 +260,11 @@ trait Milchkuh
      *
      * @return  \PDOStatement
      */
-    public function prepare($query)
+    public function prepare($query, $bind_param)
     {
+        if (!is_null($this->logger)) {
+            $this->logger->log($query);
+        }
         return $this->connect()->prepare($query);
     }
 
@@ -281,7 +299,7 @@ trait Milchkuh
             throw new Exception("Non-INSERT query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $this->last_insert_id = $this->dbh->lastInsertId();
@@ -305,7 +323,7 @@ trait Milchkuh
             throw new Exception("Non-SELECT query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $records = [];
@@ -335,7 +353,7 @@ trait Milchkuh
             throw new Exception("Non-UPDATE query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $row_count = $statement->rowCount();
@@ -358,7 +376,7 @@ trait Milchkuh
             throw new Exception("Non-DELETE query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $row_count = $statement->rowCount();
@@ -381,7 +399,7 @@ trait Milchkuh
             throw new Exception("Non-CALL query is given to " . __METHOD__, $query, $bind_param, Exception::UNMATCHED_SQL);
         }
 
-        $statement = $this->prepare($query);
+        $statement = $this->prepare($query, $bind_param);
         $this->execute($statement, $bind_param);
 
         $records = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -400,7 +418,7 @@ trait Milchkuh
      */
     public function nap($seconds)
     {
-        $statement = $this->prepare("SELECT SLEEP({$seconds})");
+        $statement = $this->prepare("SELECT SLEEP({$seconds})", []);
         $this->execute($statement, []);
         $this->disconnect($statement);
         return true;

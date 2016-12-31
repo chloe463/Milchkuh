@@ -20,7 +20,7 @@ class Milchkuh_dummy
             'db_name'    => $_ENV['DB_NAME'],
             'table_name' => $_ENV['DB_TABLE']
         ];
-        $this->init($connection_info);
+        $this->init($connection_info, __DIR__ . '/logs/test.log');
     }
 }
 
@@ -72,7 +72,7 @@ SQL;
             $_ENV['DB_USER'],
             $_ENV['DB_PASS']
         );
-        $statement = $dbh->prepare($query);
+        $statement = $dbh->prepare($query, $new_record);
         $statement->execute($new_record);
         $this->test_record_id = $dbh->lastInsertId();
     }
@@ -88,8 +88,11 @@ SQL;
             $_ENV['DB_USER'],
             $_ENV['DB_PASS']
         );
-        $statement = $dbh->prepare($query);
+        $statement = $dbh->prepare($query, []);
         $statement->execute([]);
+        if (file_exists(__DIR__ . '/logs/test.log')) {
+            unlink(__DIR__ . '/logs/test.log');
+        }
         $this->object = null;
     }
 
@@ -202,6 +205,14 @@ SQL;
     }
 
     /**
+     * @covers chloe463\Milchkuh\Milchkuh::getLogger
+     */
+    public function testGetLogger()
+    {
+        $this->assertInstanceOf('chloe463\Milchkuh\Logger', $this->object->getLogger());
+    }
+
+    /**
      * @covers chloe463\Milchkuh\Milchkuh::init
      */
     public function testInit()
@@ -219,6 +230,9 @@ SQL;
         $this->assertEquals($connection_info, $this->object->getConnectionInfo());
         $this->assertEquals($_ENV['DB_NAME'], $this->object->getDbName());
         $this->assertEquals($_ENV['DB_TABLE'], $this->object->getTableName());
+
+        $this->object->init($connection_info, __DIR__ . '/logs/test.log');
+        $this->assertInstanceOf('chloe463\Milchkuh\Logger', $this->object->getLogger());
     }
 
     /**
@@ -457,7 +471,7 @@ SQL;
      */
     public function testPrepare()
     {
-        $actual_result = $this->object->prepare('SELECT 1');
+        $actual_result = $this->object->prepare('SELECT 1', []);
         $this->assertInstanceOf('\PDOStatement', $actual_result);
     }
 
@@ -466,12 +480,12 @@ SQL;
      */
     public function testExecute()
     {
-        $statement     = $this->object->prepare('SELECT 1');
+        $statement     = $this->object->prepare('SELECT 1', []);
         $actual_result = $this->object->execute($statement, []);
         $this->assertTrue($actual_result);
 
         try {
-            $statement = $this->object->prepare('SELECT ?');
+            $statement = $this->object->prepare('SELECT ?', [1]);
             $this->object->execute($statement, []);
             $this->fail();
         } catch (Exception $e) {
