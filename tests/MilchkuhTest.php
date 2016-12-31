@@ -90,6 +90,9 @@ SQL;
         );
         $statement = $dbh->prepare($query, []);
         $statement->execute([]);
+        if (file_exists(__DIR__ . '/logs/test.log')) {
+            unlink(__DIR__ . '/logs/test.log');
+        }
         $this->object = null;
     }
 
