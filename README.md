@@ -16,12 +16,11 @@ $ composer require chloe463/milchkuh
 
 ## Usage
 
-**Initialize**
-
 ```php
 <?php
 
-use Milchkuh\Milchkuh;
+use chloe463\Milchkuh\Milchkuh;
+use chloe463\Milchkuh\Exception;
 
 class AwesomeClass
 {
@@ -33,130 +32,89 @@ class AwesomeClass
             // These are essential keys
             'host'       => 'localhost',
             'port'       => 3306,
-            'user'       => 'root',
-            'pass'       => 'vagrant',
-            'db_name'    => 'test',
+            'user'       => '',
+            'pass'       => '',
+            'db_name'    => 'db',
 
             // table_name is optional
-            'table_name' => 'milchkuh_test'
+            'table_name' => 'table'
         ];
         $this->init($db_info);
     }
 
-```
-
-**SELECT**
-
-```php
-
-    public function fetch()
+    public function doSomething()
     {
-        $query = <<<SQL
-SELECT * FROM {$this->getDbName()}.{$this->getTableName()}
- WHERE score > :score;
-SQL;
-        $bind_param = [':score' => 70];
-        $records    = [];
-
+        // SELECT
+        $records = [];
         try {
-            $records = $this->select($query, $bind_param, 'Milchkuh\\UScore');
-        } catch (\Exception $e) {
+            $records = $this->select($query, $bind_param);
+        } catch (Exception $e) {
             // Handle exception
         }
 
-        return $records;
-    }
-
-```
-
-**INSERT**
-
-```php
-
-    public function store()
-    {
-        $query = <<<SQL
-INSERT INTO {$this->getDbName()}.{$this->getTableName()} (
-    name, subject, score, del_flag, reg_date, update_date
-) VALUES (?,?,?,0,NOW(),NOW())
-SQL;
-        $bind_param = ['milchkuh', 99, 99];
-
-        $id = null;
+        // INSERT
+        $last_insert_id = null;
         try {
-            $this->begin();
-            $id = $this->insert($query, $bind_param);
-            $this->commit();
-        } catch (\Exception $e) {
+            $last_insert_id = $this->insert($query, $bind_param);
+        } catch (Exception $e) {
             // Handle exception
         }
 
-        return $id;
-    }
-
-```
-
-**UPDATE**
-
-```php
-
-    public function edit($id)
-    {
-        $query = <<<SQL
-UPDATE {$this->getDbName()}.{$this->getTableName()}
-   SET score    = score + 1
- WHERE id       = :id
-   AND del_flag = 0
-SQL;
-        $bind_param = [':id' => $id];
-        try {
-            $this->begin();
-            $row_count = $this->update($query, $bind_param);
-            $this->commit();
-        } catch (\Exception $e) {
-            // Handle exception
-        }
-
-        return $row_count;
-    }
-
-```
-
-**DELETE**
-
-```php
-
-    public function remove($id)
-    {
-        $query = <<<SQL
-DELETE FROM {$this->getDbName()}.{$this->getTableName()}
- WHERE id = :id
-   AND del_flag = 0
-SQL;
-        $bind_param = [':id' => $id - 1];
-
+        // UPDATE
         $row_count = null;
         try {
-            $this->begin();
-            $row_count = $this->delete($query, $bind_param);
-            $this->commit();
-        } catch (\Exception $e) {
+            $row_count = $this->update($query, $bind_param);
+        } catch (Exception $e) {
             // Handle exception
         }
 
-        return $row_count;
-    }
-```
+        // DELETE
+        $row_count = null;
+        try {
+            $row_count = $this->delete($query, $bind_param);
+        } catch (Exception $e) {
+            // Handle exception
+        }
 
-**SLEEP**
-
-```php
-
-    public function wait()
-    {
+        // SLEEP
         $this->nap(3);
+
+        // There are some transaction APIs
+        try {
+            $this->begin();
+
+            // Execute query
+
+            $this->commit();
+        } catch (Exception $e) {
+            $this->rollBack();
+        }
     }
 }
-
 ```
+
+## Other features
+
+* `QueryBuilder` helps you to build SQL
+
+```php
+$qb = new QueryBuilder();
+$qb->append('SELECT * FROM db.table')
+   ->append(' WHERE column1 = :column1')
+   ->append(' AND column2 = :column2', isset($values['column2']));
+
+$query = $qb->getQuery();
+// If $values['column2'] is set
+// SELECT * FROM db.table WHERE column1 = :column1 AND column2 = :column2
+//
+// If $values['column2'] is NOT set
+// SELECT * FROM db.table WHERE column1 = :column1
+```
+
+* `Logger` logs queries
+    * To enable logger, just pass path to log file as 2nd argument to `chloe463\Milchkuh\Milchkuh::init`
+    ```php
+    // Query logs are going to /path/to/log_file
+    $this->init($connection_info, '/path/to/log_file');
+    ```
 
