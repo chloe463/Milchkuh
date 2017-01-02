@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.2.0
+
+### New Feature
+
+* Add `chloe463\Milchkuh\BindParamBuilder`
+
 ## v1.1.0
 
 ### New Feature
