@@ -18,7 +18,8 @@ class Milchkuh_dummy
             'user'       => $_ENV['DB_USER'],
             'pass'       => $_ENV['DB_PASS'],
             'db_name'    => $_ENV['DB_NAME'],
-            'table_name' => $_ENV['DB_TABLE']
+            'table_name' => $_ENV['DB_TABLE'],
+            'charset'    => $_ENV['CHARSET']
         ];
         $this->init($connection_info, __DIR__ . '/logs/test.log');
     }
@@ -107,7 +108,8 @@ SQL;
             'user'       => $_ENV['DB_USER'],
             'pass'       => $_ENV['DB_PASS'],
             'db_name'    => $_ENV['DB_NAME'],
-            'table_name' => $_ENV['DB_TABLE']
+            'table_name' => $_ENV['DB_TABLE'],
+            'charset'    => $_ENV['CHARSET']
         ];
         $actual_result = $this->object->getConnectionInfo();
         $this->assertEquals($expected_result, $actual_result);
@@ -448,7 +450,57 @@ SQL;
      */
     public function testBuildDsn()
     {
-        $expected_result = sprintf("mysql:dbname=%s;host=%s;port=%s", $_ENV['DB_NAME'], $_ENV['DB_HOST'], $_ENV['DB_PORT']);
+        $expected_result = sprintf("mysql:dbname=%s;host=%s;port=%s;charset=%s",
+            $_ENV['DB_NAME'], $_ENV['DB_HOST'], $_ENV['DB_PORT'], $_ENV['CHARSET']
+        );
+        $actual_result   = $this->object->buildDsn();
+
+        $this->assertEquals($expected_result, $actual_result);
+    }
+
+    /**
+     * @covers chloe463\Milchkuh\Milchkuh::buildDsn
+     */
+    public function testBuildDsn_withNonUtf8Charset()
+    {
+        // Set charset sjis (non-utf8)
+        $connection_info = [
+            'host'       => $_ENV['DB_HOST'],
+            'port'       => $_ENV['DB_PORT'],
+            'user'       => $_ENV['DB_USER'],
+            'pass'       => $_ENV['DB_PASS'],
+            'db_name'    => $_ENV['DB_NAME'],
+            'table_name' => $_ENV['DB_TABLE'],
+            'charset'    => 'sjis'
+        ];
+        $this->object->init($connection_info);
+        $expected_result = sprintf("mysql:dbname=%s;host=%s;port=%s;charset=%s",
+            $_ENV['DB_NAME'], $_ENV['DB_HOST'], $_ENV['DB_PORT'], 'sjis'
+        );
+        $actual_result   = $this->object->buildDsn();
+
+        $this->assertEquals($expected_result, $actual_result);
+    }
+
+    /**
+     * @covers chloe463\Milchkuh\Milchkuh::buildDsn
+     */
+    public function testBuildDsn_withNonCharsetParam()
+    {
+        // Give no charset parameter
+        // utf8 is to be set by default
+        $connection_info = [
+            'host'       => $_ENV['DB_HOST'],
+            'port'       => $_ENV['DB_PORT'],
+            'user'       => $_ENV['DB_USER'],
+            'pass'       => $_ENV['DB_PASS'],
+            'db_name'    => $_ENV['DB_NAME'],
+            'table_name' => $_ENV['DB_TABLE']
+        ];
+        $this->object->init($connection_info);
+        $expected_result = sprintf("mysql:dbname=%s;host=%s;port=%s;charset=%s",
+            $_ENV['DB_NAME'], $_ENV['DB_HOST'], $_ENV['DB_PORT'], 'utf8'
+        );
         $actual_result   = $this->object->buildDsn();
 
         $this->assertEquals($expected_result, $actual_result);
