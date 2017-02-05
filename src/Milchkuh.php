@@ -42,7 +42,7 @@ trait Milchkuh
     /**
      * @var Logger
      */
-    protected $logger;
+    protected $query_logger;
 
     /**
      * Getters and setters
@@ -89,7 +89,7 @@ trait Milchkuh
 
     public function getLogger()
     {
-        return $this->logger;
+        return $this->query_logger;
     }
 
     /**
@@ -104,9 +104,8 @@ trait Milchkuh
         $this->db_name         = $connection_info['db_name'];
         $this->table_name      = isset($connection_info['table_name']) ? $connection_info['table_name'] : '';
 
-        $this->logger = null;
-        if ($log_file_path !== '') {
-            $this->logger = new Logger($log_file_path);
+        if (is_null($this->query_logger) && $log_file_path !== '') {
+            $this->query_logger = new Logger($log_file_path);
         }
 
         return;
@@ -262,8 +261,8 @@ trait Milchkuh
      */
     public function prepare($query, $bind_param)
     {
-        if (!is_null($this->logger)) {
-            $this->logger->log($query);
+        if (!is_null($this->query_logger)) {
+            $this->query_logger->log($query);
         }
         return $this->connect()->prepare($query);
     }
