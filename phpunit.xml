@@ -11,5 +11,6 @@
         <env name="DB_PASS" value=""/>
         <env name="DB_NAME" value="phpunit"/>
         <env name="DB_TABLE" value="milchkuh_test"/>
+        <env name="CHARSET" value="utf8"/>
     </php>
 </phpunit>

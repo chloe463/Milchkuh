@@ -177,8 +177,11 @@ trait Milchkuh
      */
     public function buildDsn()
     {
-        return sprintf("mysql:dbname=%s;host=%s;port=%s",
-            $this->connection_info['db_name'], $this->connection_info['host'], $this->connection_info['port']
+        return sprintf("mysql:dbname=%s;host=%s;port=%s;charset=%s",
+            $this->connection_info['db_name'],
+            $this->connection_info['host'],
+            $this->connection_info['port'],
+            isset($this->connection_info['charset']) ? $this->connection_info['charset'] : 'utf8'
         );
     }
 
