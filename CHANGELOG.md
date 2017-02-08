@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v1.2.2 (4040425)
+
+## Improvement
+
+* Make it possible to set charset
+
+## v1.2.1 (a1a6c21)
+
+### Code Refactor
+
+* Change logger variable name (`$logger` -> `$query_logger`)
+
 ## v1.2.0
 
 ### New Feature
