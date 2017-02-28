@@ -123,4 +123,51 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $actual_result   = $this->object->buildMessage($query, $bind_param);
         $this->assertRegExp($expected_result, $actual_result);
     }
+
+    /**
+     * @covers chloe463\Milchkuh\Logger::replaceQuestion2Param
+     */
+    public function testReplaceQuestion2Param()
+    {
+        // With empty bind parameters
+        $query           = 'SELECT * FROM db.table WHERE key = ? AND column = ?';
+        $bind_param      = [];
+        $expected_result = 'SELECT * FROM db.table WHERE key = ? AND column = ?';
+        $actual_result   = $this->object->replaceQuestion2Param($query, $bind_param);
+        $this->assertEquals($expected_result, $actual_result);
+
+        // With bind parameters
+        $query           = 'SELECT * FROM db.table WHERE key = ? AND column = ?';
+        $bind_param      = [123, 456];
+        $expected_result = 'SELECT * FROM db.table WHERE key = 123 AND column = 456';
+        $actual_result   = $this->object->replaceQuestion2Param($query, $bind_param);
+        $this->assertEquals($expected_result, $actual_result);
+    }
+
+    /**
+     * @covers chloe463\Milchkuh\Logger::replaceKeyword2Param
+     */
+    public function testReplaceKeyword2Param()
+    {
+        // With empty bind parameters
+        $query           = 'SELECT * FROM db.table WHERE key = :key AND column = :column';
+        $bind_param      = [];
+        $expected_result = 'SELECT * FROM db.table WHERE key = :key AND column = :column';
+        $actual_result   = $this->object->replaceKeyword2Param($query, $bind_param);
+        $this->assertEquals($expected_result, $actual_result);
+
+        // With bind parameters
+        $query           = 'SELECT * FROM db.table WHERE key = :key AND column = :column';
+        $bind_param      = [':key' => 123, ':column' => 456];
+        $expected_result = 'SELECT * FROM db.table WHERE key = 123 AND column = 456';
+        $actual_result   = $this->object->replaceKeyword2Param($query, $bind_param);
+        $this->assertEquals($expected_result, $actual_result);
+
+        // With bind parameters (no colons)
+        $query           = 'SELECT * FROM db.table WHERE key = :key AND column = :column';
+        $bind_param      = ['key' => 123, 'column' => 456];
+        $expected_result = 'SELECT * FROM db.table WHERE key = 123 AND column = 456';
+        $actual_result   = $this->object->replaceKeyword2Param($query, $bind_param);
+        $this->assertEquals($expected_result, $actual_result);
+    }
 }

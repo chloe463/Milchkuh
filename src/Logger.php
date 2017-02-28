@@ -64,9 +64,9 @@ class Logger
 
         $message = '';
         if (strpos($query, '?') !== false) {
-            $message = $this->_replaceQuestion2Param($query, $bind_param);
+            $message = $this->replaceQuestion2Param($query, $bind_param);
         } else {
-            $message = $this->_replaceKeyword2Param($query, $bind_param);
+            $message = $this->replaceKeyword2Param($query, $bind_param);
         }
         return sprintf("[%s] [%s] %s\n", $now, $pid, $message);
     }
@@ -77,7 +77,7 @@ class Logger
      * @param   string  $query
      * @param   array   $bind_param
      */
-    private function _replaceQuestion2Param($query, $bind_param)
+    public function replaceQuestion2Param($query, $bind_param)
     {
         if (empty($bind_param)) {
             return $query;
@@ -98,7 +98,7 @@ class Logger
      * @param   string  $query
      * @param   array   $bind_param
      */
-    private function _replaceKeyword2Param($query, $bind_param)
+    public function replaceKeyword2Param($query, $bind_param)
     {
         if (empty($bind_param)) {
             return $query;
